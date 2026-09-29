@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مصنع الباديه للعصائر الطبيعية - نيالا</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+  
+  body {
+    background: linear-gradient(135deg, #f5e6d3 0%, #fff8ed 100%);
+    color: #2c1810;
+    overflow-x: hidden;
+  }
+
+  /* ===== شاشة البداية بالشعار ===== */
+  .splash-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #8b1e3f 0%, #c9452c 50%, #d4a017 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1s ease, visibility 1s ease;
+  }
+
+  .splash-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .logo-container {
+    animation: logoEntrance 2s ease forwards;
+    opacity: 0;
+  }
+
+  .logo-svg {
+    width: 220px;
+    height: 220px;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+  }
+
+  .splash-title {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-top: 25px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .splash-subtitle {
+    color: #fff8ed;
+    font-size: 1.2rem;
+    margin-top: 10px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+
+  @keyframes logoEntrance {
+    0% { opacity: 0; transform: scale(0.3) rotate(-180deg); }
+    60% { opacity: 1; transform: scale(1.1) rotate(10deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== المحتوى الرئيسي ===== */
+  .main-content {
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+
+  .main-content.visible { opacity: 1; }
+
+  .hero {
+    text-align: center;
+    padding: 80px 20px 40px;
+    background: linear-gradient(180deg, #fff8ed 0%, #f5e6d3 100%);
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    color: #8b1e3f;
+    margin-bottom: 15px;
+    font-weight: 900;
+  }
+
+  .hero p {
+    font-size: 1.3rem;
+    color: #6b4226;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* ===== قسم العصائر ===== */
+  .juices-section {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #8b1e3f;
+    margin-bottom: 50px;
+    position: relative;
+  }
+
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #d4a017, #c9452c);
+    margin: 15px auto 0;
+    border-radius: 2px;
+  }
+
+  .juices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+  }
+
+  .juice-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(139,30,63,0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .juice-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(139,30,63,0.2);
+  }
+
+  .juice-image {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .juice-image::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    animation: shine 3s infinite;
+  }
+
+  @keyframes shine {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+  }
+
+  .karkadeh { background: linear-gradient(135deg, #c0392b, #8b1e3f); }
+  .tabaldi { background: linear-gradient(135deg, #7cb342, #558b2f); }
+  .ardeeb { background: linear-gradient(135deg, #d4a017, #b8860b); }
+  .doum { background: linear-gradient(135deg, #6d4c41, #3e2723); }
+
+  .juice-info {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .juice-info h3 {
+    color: #8b1e3f;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .juice-info p {
+    color: #6b4226;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ===== زر مرحبا بك ===== */
+  .welcome-section {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #8b1e3f 0%, #c9452c 100%);
+    color: white;
+  }
+
+  .welcome-btn {
+    background: linear-gradient(135deg, #d4a017 0%, #f4c430 100%);
+    color: #2c1810;
+    border: none;
+    padding: 20px 60px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(212,160,23,0.4);
+    transition: all 0.3s ease;
+    font-family: 'Tajawal', sans-serif;
+    margin-top: 20px;
+  }
+
+  .welcome-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(212,160,23,0.6);
+  }
+
+  /* ===== النافذة المنبثقة ===== */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    padding: 20px;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: white;
+    max-width: 800px;
+    width: 100%;
+    max-height: 85vh;
+    border-radius: 20px;
+    overflow: hidden;
+    animation: modalIn 0.5s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .modal-header {
+    background: linear-gradient(135deg, #8b1e3f, #c9452c);
+    color: white;
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-header h2 { font-size: 1.8rem; }
+
+  .close-btn {
+    background: white;
+    color: #8b1e3f;
+    border: none;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-weight: 700;
+    transition: transform 0.3s ease;
+  }
+
+  .close-btn:hover { transform: rotate(90deg); }
+
+  .modal-body {
+    padding: 30px;
+    overflow-y: auto;
+    line-height: 1.9;
+    color: #2c1810;
+  }
+
+  .modal-body h3 {
+    color: #8b1e3f;
+    margin: 25px 0 15px;
+    font-size: 1.4rem;
+    padding-right: 15px;
+    border-right: 4px solid #d4a017;
+  }
+
+  .modal-body h3:first-child { margin-top: 0; }
+
+  .modal-body ul {
+    margin: 15px 25px;
+    list-style: none;
+  }
+
+  .modal-body ul li {
+    padding: 10px 0;
+    padding-right: 25px;
+    position: relative;
+  }
+
+  .modal-body ul li::before {
+    content: '🌿';
+    position: absolute;
+    right: 0;
+    top: 10px;
+  }
+
+  .tip-box {
+    background: linear-gradient(135deg, #fff8ed, #f5e6d3);
+    border-right: 5px solid #d4a017;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+  }
+
+  .warning-box {
+    background: linear-gradient(135deg, #ffebee, #ffcdd2);
+    border-right: 5px solid #c0392b;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+  }
+
+  .solution-box {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border-right: 5px solid #2e7d32;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+  }
+
+  footer {
+    text-align: center;
+    padding: 30px;
+    background: #2c1810;
+    color: #d4a017;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .hero p { font-size: 1rem; }
+    .section-title { font-size: 1.6rem; }
+    .welcome-btn { padding: 15px 40px; font-size: 1.2rem; }
+    .modal-header h2 { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- شاشة البداية -->
+<div class="splash-screen" id="splashScreen">
+  <div class="logo-container">
+    <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- خلفية دائرية ذهبية -->
+      <circle cx="100" cy="100" r="95" fill="#d4a017" stroke="#fff8ed" stroke-width="3"/>
+      <circle cx="100" cy="100" r="85" fill="none" stroke="#8b1e3f" stroke-width="2" stroke-dasharray="5,3"/>
+      
+      <!-- زجاجة العصير -->
+      <path d="M 80 50 L 80 40 Q 80 35 85 35 L 115 35 Q 120 35 120 40 L 120 50 L 125 55 L 125 140 Q 125 155 110 155 L 90 155 Q 75 155 75 140 L 75 55 Z" 
+            fill="#8b1e3f" stroke="#2c1810" stroke-width="2"/>
+      
+      <!-- غطاء الزجاجة -->
+      <rect x="82" y="28" width="36" height="12" rx="2" fill="#c9452c" stroke="#2c1810" stroke-width="2"/>
+      
+      <!-- العصير داخل الزجاجة -->
+      <path d="M 80 90 L 80 140 Q 80 150 90 150 L 110 150 Q 120 150 120 140 L 120 90 Z" 
+            fill="#c0392b" opacity="0.9"/>
+      
+      <!-- فقاعات -->
+      <circle cx="92" cy="110" r="3" fill="#fff8ed" opacity="0.7"/>
+      <circle cx="108" cy="125" r="2" fill="#fff8ed" opacity="0.7"/>
+      <circle cx="100" cy="135" r="2.5" fill="#fff8ed" opacity="0.7"/>
+      
+      <!-- ورقة شجر -->
+      <path d="M 125 70 Q 140 65 150 50 Q 155 70 140 85 Z" 
+            fill="#7cb342" stroke="#2c1810" stroke-width="1.5"/>
+      <path d="M 125 70 L 145 72" stroke="#2c1810" stroke-width="1" fill="none"/>
+      
+      <!-- النص -->
+      <text x="100" y="180" text-anchor="middle" font-family="Tajawal" font-size="14" font-weight="900" fill="#2c1810">دارفور للعصائر</text>
+    </svg>
+  </div>
+  <h1 class="splash-title">مصنع الباديه للعصائر الطبيعية</h1>
+  <p class="splash-subtitle">🌴 من قلب نيالا إلى كل بيت سوداني 🌴</p>
+  <h1>تحياتي احمد ابوفلج</h1>
+  <h1>مرحبا بك السيد عبدالله</h1>
+</div>
+
+<!-- المحتوى الرئيسي -->
+<div class="main-content" id="mainContent">
+  
+  <!-- القسم الرئيسي -->
+  <section class="hero">
+    <h1>🥤 عصائر تقليدية بجودة عالمية</h1>
+    <p>نقدم أجود العصائر السودانية الأصيلة: التبلدي، الأرديب، الدوم، والكركدي - محضّرة بعناية من مزارع دارفور</p>
+  </section>
+
+  <!-- قسم العصائر -->
+  <section class="juices-section">
+    <h2 class="section-title">منتجاتنا الطبيعية</h2>
+    <div class="juices-grid">
+      <div class="juice-card">
+        <div class="juice-image karkadeh"><img src="data:image/jpeg;base64,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" alt=""></div>
+        <div class="juice-info">
+          <h3>عصير الكركدي</h3>
+          <p>مشروب الزهرة الأحمر الغني بمضادات الأكسدة وفيتامين C</p>
+        </div>
+      </div>
+
+      <div class="juice-card">
+        <div class="juice-image tabaldi"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh4GKTdJpjKgH9ulgqDgZhtsOcx8CAVNSNIXKEc5mqfSSQhPwai48imhME&s=10" alt=""></div>
+        <div class="juice-info">
+          <h3>عصير التبلدي</h3>
+          <p>فاكهة البوباب الاستوائية، كنز من الفيتامينات والمعادن</p>
+        </div>
+      </div>
+
+      <div class="juice-card">
+        <div class="juice-image ardeeb"><img src="https://cdn.alweb.com/thumbs/hotcoldcups/article/fit727x484/1/وصفات-شهية-لعمل-عصير-العرديب.jpeg" alt=""></div>
+        <div class="juice-info">
+          <h3>عصير الأرديب</h3>
+          <p>التمر الهندي السوداني، منعش ومفيد للهضم</p>
+        </div>
+      </div>
+
+      <div class="juice-card">
+        <div class="juice-image doum"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTonb8jTSZAECJmUaM_F08SvliEjit2pmRA4pRvJuyeKkPxnH94TG6rDaku&s=10" alt=""></div>
+        <div class="juice-info">
+          <h3>عصير الدوم</h3>
+          <p>فاكهة النخيل الأفريقية، غنية بالألياف والقيمة الغذائية</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- قسم الترحيب -->
+  <section class="welcome-section">
+    <h2 style="font-size: 2.5rem; margin-bottom: 15px;">👋 مرحباً بك في مشروعك</h2>
+    <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">اضغط على الزر أدناه لعرض خطة تأسيس المصنع المصغر من الصين</p>
+    <button class="welcome-btn" onclick="openModal()">مرحباً بك 🚀</button>
+  </section>
+
+  <footer>
+    <p>© 2026 مصنع دارفور للعصائر الطبيعية - نيالا، جنوب دارفور، السودان</p>
+  </footer>
+</div>
+
+<!-- النافذة المنبثقة -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>📋 خطة تأسيس المصنع المصغر</h2>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      
+      <h3>أولاً: خط الإنتاج المصغر المطلوب من الصين 🏭</h3>
+      <p>لا تحتاج إلى خط إنتاج ضخم، بل إلى خط "شبه أوتوماتيكي" (Semi-Automatic) يتناسب مع عصائر مثل الدوم، التبلدي، والكركدي. عند البحث في مواقع مثل (Alibaba.com) أو (Made-in-China.com)، ابحث عن هذه الماكينات تحديداً:</p>
+      <ul>
+        <li><strong>غسالة ومنظف (Fruit/Vegetable Washer):</strong> لتنظيف ثمار الدوم والأرديب والتبلدي من الشوائب والتراب قبل التصنيع.</li>
+        <li><strong>ماكينة استخلاص وهرس (Pulper and Finisher Machine):</strong> ضرورية جداً للدوم والأرديب لفصل اللب والبذور عن السائل بكفاءة عالية.</li>
+        <li><strong>خزان خلط وتسخين (Mixing Tank with Heating/Jacketed Kettle):</strong> سعة 500 إلى 1000 لتر، مصنوع من الـ "ستانلس ستيل 304" (Food Grade). يستخدم لغلي الكركدي، وخلط السكر، والأهم: للبسترة.</li>
+        <li><strong>ماكينة تعبئة شبه أوتوماتيكية (Semi-Automatic Liquid Filling Machine):</strong> لملء الزجاجات بدقة وسرعة.</li>
+        <li><strong>ماكينة غلق الأغطية (Capping Machine) أو ماكينة غلق الأكواب (Cup Sealing Machine):</strong> حسب نوع العبوة التي ستختارها.</li>
+      </ul>
+      <div class="tip-box">
+        💡 <strong>نصيحة ذهبية:</strong> قبل الشراء، أرسل عينات من (الدوم والتبلدي) لمورد الماكينات في الصين ليخبرك إذا كانت الماكينة قادرة على معالجة الألياف الكثيفة لهذه الفواكه دون أن تنسد.
+      </div>
+
+      <h3>ثانياً: موضوع البلاستيك والتغليف 📦</h3>
+      <p>استيراد زجاجات بلاستيك فارغة من الصين إلى السودان فكرة غير اقتصادية تماماً، لأنك ستدفع تكلفة شحن بحري لمساحة كبيرة من "الهواء". <strong>الحل الاحترافي:</strong></p>
+      <ul>
+        <li><strong>استيراد "قوالب البلاستيك" (Preforms):</strong> وهي أنابيب بلاستيكية صغيرة جداً تشبه أنبوب الاختبار. تشحن منها آلاف القطع في مساحة صغيرة، ثم تشتري ماكينة "نفخ" (Blowing Machine) صغيرة في نيالا لتحويلها إلى زجاجات في مصنعك.</li>
+        <li><strong>أو الشراء المحلي:</strong> شراء الزجاجات الفارغة من مصانع البلاستيك في الخرطوم أو بورتسودان، واستيراد فقط "أغطية الأمان" (Tamper-evident caps) و "أفلام التغليف" (Shrink wrap) من الصين لأنها رخيصة وصغيرة الحجم.</li>
+        <li><strong>الملصقات (Labels):</strong> صممها في السودان واطبعها محلياً لتوفير تكاليف الشحن ودعم الاقتصاد المحلي، وتأكد من مطابقتها للمواصفات السودانية.</li>
+      </ul>
+
+      <h3>ثالثاً: المواد الحافظة والعمر الافتراضي ⚗️</h3>
+      <p>بصفتك مصنعاً، يجب أن تخضع لمواصفات الهيئة السودانية للمواصفات والمقاييس (SSMO). إضافة المواد الحافظة الكيميائية عشوائياً خطر صحي ومخالف للقانون.</p>
+      
+      <div class="solution-box">
+        <strong>✅ الحل الاحترافي (بدون مواد حافظة كيميائية ضارة):</strong> اعتمد على تقنية <strong>البسترة والتعبئة الساخنة (Hot Fill Pasteurization)</strong>:
+        <ul style="margin-top: 10px;">
+          <li>يتم تسخين العصير بعد خلطه إلى درجة حرارة 85-90 مئوية لمدة قصيرة.</li>
+          <li>يتم تعبئته في الزجاجات وهو ساخن جداً، ثم إغلاقه فوراً.</li>
+          <li>عند تبريده، ينكمش الهواء داخل الزجاجة مما يخلق "فراغاً" (Vacuum) يمنع دخول البكتيريا. هذه الطريقة تمنح العصير عمرًا افتراضيًا يصل إلى 3 - 6 أشهر في درجة حرارة الغرفة (أو أطول في الثلاجة) دون الحاجة لإضافة أي مواد كيميائية.</li>
+        </ul>
+      </div>
+
+      <p><strong>إذا اضطررت لاستخدام مواد حافظة (بإشراف مهندس أغذية):</strong> المواد المسموحة عالمياً ومحلياً بحدود دقيقة جداً هي:</p>
+      <ul>
+        <li><strong>بنزوات الصوديوم (Sodium Benzoate).</strong></li>
+        <li><strong>سوربات البوتاسيوم (Potassium Sorbate).</strong></li>
+      </ul>
+      
+      <div class="warning-box">
+        ⚠️ <strong>تحذير:</strong> يجب أن تكون بدرجة "Food Grade" (مخصصة للأغذية)، ويجب أن يحدد لك مهندس أغذية النسبة بالملليجرام لكل لتر، لأن تجاوز الحد المسموح يؤدي إلى إعدام المنتج ومخالفة قانونية.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // إخفاء شاشة البداية بعد 3 ثواني
+  setTimeout(() => {
+    document.getElementById('splashScreen').classList.add('hidden');
+    setTimeout(() => {
+      document.getElementById('mainContent').classList.add('visible');
+    }, 300);
+  }, 3000);
+
+  // فتح النافذة المنبثقة
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // إغلاق النافذة المنبثقة
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+
+  // إغلاق النافذة عند النقر خارجها
+  document.getElementById('modalOverlay').addEventListener('click', (e) => {
+    if (e.target.id === 'modalOverlay') {
+      closeModal();
+    }
+  });
+
+  // إغلاق النافذة عند الضغط على زر Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
+</script>
+
+</body>
+</html>
